@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const jwt = require('jsonwebtoken');
+const { query } = require('express');
 
 // env variables
 require('dotenv').config()
@@ -32,7 +33,21 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 // CRUD operations 
 async function run(){
     try{
-        
+        const database = await client.db('service-review')
+        const serviceCollection = await database.collection('services')
+
+        // get services from database
+        app.get('/services' , async (req, res) => {
+            let services;
+            if(req.query)
+                services = await serviceCollection.find({}).limit(3).toArray();
+            else
+                services = await serviceCollection.find({}).toArray();
+            res.send({
+                status: "success",
+                data: services
+            })
+        })
     }
     finally{}
 }

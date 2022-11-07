@@ -1,0 +1,41 @@
+[
+    {
+        "title" : "Couple Photos",
+        "img" : "https://images.unsplash.com/photo-1542203463-e3f116da76ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1206&q=80",
+        "description" : "Human love to spend time with their beloved person. Its so special and so beautiful. Sometimes we feel upset of not having the same moments from pasts in present situation or not having the beloved person with us. In this case I am here to help you. You can contact with me to take your precious moment captured in my device. So when you are not togather, you can have great time watching those images.",
+        "price" : "40"
+    },
+    
+    {
+        "title" : "Wedding Photos",
+        "img" : "https://images.unsplash.com/photo-1610276347233-2ab70fc71da8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=874&q=80",
+        "description" : "Marrying someone is so much special. You can just start a new life with your partner after marrying him/her. Many of us just marry once in a whole lifetime. So its very important of keeping the memories in your gallery book. Thats why i am here to help you. You can contact with me to take your precious moment captured in my device.",
+        "price" : "60"
+    },
+    {
+        "title" : "Marketing Photos",
+        "img" : "https://images.unsplash.com/photo-1519568470290-c0c1fbfff16f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=904&q=80",
+        "description" : "In this corona situation, many of use want to make money from sitting in our home. So many of us start business at from by selling multiple products online such as t-shirt, electronics, shoes etc. To make them attractive , taking good picture of them is really a hastle. In that case i am here to help you. You can contact with me to take your precious moment captured in my device.",
+        "price" : "25"
+    },
+    {
+        "title" : "Modeling Photos",
+        "img" : "https://images.unsplash.com/photo-1664763079262-056e908630e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=821&q=80",
+        "description" : "Many of us nowadays want to post some special pictures in social medias and to make a sweet profile as many of us in our society is judged by how we look and how our social profiles looks. So in need of taking pictures as our favourite influencers, i am here to help you guys. You can contact with me to take your precious moment captured in my device.",
+        "price" : "20"
+    },
+    {
+        "title" : "Wedding Videos",
+        "img" : "https://images.unsplash.com/photo-1594140700508-0d52fffe633d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+        "description" : "Marrying someone is so much special. You can just start a new life with your partner after marrying him/her. Many of us just marry once in a whole lifetime. So its very important of keeping the memories in your gallery book. Thats why i am here to help you. You can contact with me to take your precious moment captured in my device.",
+        "price" : "100"
+    },
+    
+    
+    {
+        "title" : "Editing Videos",
+        "img" : "https://images.unsplash.com/photo-1543336472-fcf478c443db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+        "description" : "If you wanna make people to watch your videos, you must focus on how its actually being made and being edited. If its not good enough, you will lose people attentions. So in that case i am here to help you. You can contact with me to take your precious moment captured in my device.",
+        "price" : "50"
+    }
+]
