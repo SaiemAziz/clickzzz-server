@@ -39,7 +39,7 @@ async function run(){
         // get services from database
         app.get('/services' , async (req, res) => {
             let services;
-            if(req.query)
+            if(req.query.limit)
                 services = await serviceCollection.find({}).limit(3).toArray();
             else
                 services = await serviceCollection.find({}).toArray();
