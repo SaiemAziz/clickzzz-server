@@ -51,7 +51,7 @@ async function run(){
         })
 
         // add a service 
-        app.post('/services', async (req, res) => {
+        app.post('/add-service', auth, async (req, res) => {
             let service = req.body;
             let result = await serviceCollection.insertOne(service)
             let services = await serviceCollection.find({}).toArray();
@@ -95,6 +95,17 @@ async function run(){
                 status: "success",
                 data: reviews
             })
+        })
+
+        // create jwt token and send 
+        app.get('/jwt', (req, res)=> {
+            let userEmail = req.headers.email
+            console.log(userEmail)
+            let token = jwt.sign({email: userEmail}, secret)
+            console.log(token);
+            res.send(
+                {token}
+            )
         })
     }
     finally{}
