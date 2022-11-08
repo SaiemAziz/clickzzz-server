@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
         let queryEmail = req.query.email;
         let data = jwt.verify(token, process.env.SECRET_TOKEN)
         if(queryEmail !== data.email)
-        return res.status(403).send({status: 401, message: "Forbidden Access"});
+        return res.status(403).send({status: 403, message: "Forbidden Access"});
         next();
     }
 }
@@ -71,7 +71,6 @@ async function run(){
             let id = req.params.id;
             let query = {_id : ObjectId(id)}
             let serviceDetails = await serviceCollection.findOne(query)
-
             res.send({
                 status: "success",
                 data: serviceDetails
@@ -81,7 +80,7 @@ async function run(){
 
         // get reviews for a service
         app.get('/my-reviews/',auth, async (req, res) => {
-            
+            let queryEmail = req.query.email;
             let query = {email: queryEmail}
             let reviews = await reviewCollection.find(query).toArray()
             res.send({
