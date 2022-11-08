@@ -50,13 +50,24 @@ async function run(){
             })
         })
 
+        // add a service 
+        app.post('/services', async (req, res) => {
+            let service = req.body;
+            let result = await serviceCollection.insertOne(service)
+            let services = await serviceCollection.find({}).toArray();
+            res.send({
+                status: "success",
+                data: services
+            })
+        })
+
         // get service details from database
         app.get('/service-details/:id' , async (req, res) => {
             
             let id = req.params.id;
             let query = {_id : ObjectId(id)}
             let serviceDetails = await serviceCollection.findOne(query)
-            
+
             res.send({
                 status: "success",
                 data: serviceDetails
