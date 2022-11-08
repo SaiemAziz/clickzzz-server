@@ -15,12 +15,16 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 const auth = (req, res, next) => {
-    const token = req.headers.authToken;
+    const token = req.headers.authtoken;
     if(!token)
-        res.status(401).send({status: 401, message: "Unauthorised Access"});
+    {
+        return res.status(401).send({status: 401, message: "Unauthorised Access"});
+    }
     else{
+        let queryEmail = req.query.email;
         let data = jwt.verify(token, process.env.SECRET_TOKEN)
-        req.authResult = data
+        if(queryEmail !== data.email)
+        return res.status(403).send({status: 401, message: "Forbidden Access"});
         next();
     }
 }
@@ -51,7 +55,7 @@ async function run(){
         })
 
         // add a service 
-        app.post('/add-service', auth, async (req, res) => {
+        app.post('/add-service', async (req, res) => {
             let service = req.body;
             let result = await serviceCollection.insertOne(service)
             let services = await serviceCollection.find({}).toArray();
@@ -76,8 +80,8 @@ async function run(){
 
 
         // get reviews for a service
-        app.get('/my-reviews/', async (req, res) => {
-            let queryEmail = req.query.email;
+        app.get('/my-reviews/',auth, async (req, res) => {
+            
             let query = {email: queryEmail}
             let reviews = await reviewCollection.find(query).toArray()
             res.send({
@@ -100,9 +104,7 @@ async function run(){
         // create jwt token and send 
         app.get('/jwt', (req, res)=> {
             let userEmail = req.headers.email
-            console.log(userEmail)
-            let token = jwt.sign({email: userEmail}, secret)
-            console.log(token);
+            let token = jwt.sign({email: userEmail}, secret,{expiresIn: '20d'})
             res.send(
                 {token}
             )
