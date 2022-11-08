@@ -83,6 +83,7 @@ async function run(){
             let queryEmail = req.query.email;
             let query = {email: queryEmail}
             let reviews = await reviewCollection.find(query).toArray()
+            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
             res.send({
                 status: "success",
                 data: reviews
@@ -94,6 +95,7 @@ async function run(){
             let queryServiceId = req.query.id;
             let query = {service_id: queryServiceId}
             let reviews = await reviewCollection.find(query).toArray()
+            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
             res.send({
                 status: "success",
                 data: reviews
@@ -105,6 +107,7 @@ async function run(){
             let newReview = req.body;
             let result = await reviewCollection.insertOne(newReview)
             let reviews = await reviewCollection.find({}).toArray()
+            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
             res.send({
                 status: "success",
                 data: reviews
