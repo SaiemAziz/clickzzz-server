@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: true}))
 const auth = (req, res, next) => {
     const token = req.headers.authToken;
     if(!token)
-        res.send({status: 401, message: "Unauthorised Access"});
+        res.status(401).send({status: 401, message: "Unauthorised Access"});
     else{
         let data = jwt.verify(token, process.env.SECRET_TOKEN)
         req.authResult = data
@@ -35,6 +35,7 @@ async function run(){
     try{
         const database = await client.db('service-review')
         const serviceCollection = await database.collection('services')
+        const reviewCollection = await database.collection('reviews')
 
         // get services from database
         app.get('/services' , async (req, res) => {
@@ -46,6 +47,18 @@ async function run(){
             res.send({
                 status: "success",
                 data: services
+            })
+        })
+
+
+        // get reviews for a service
+        app.get('/my-reviews/', async (req, res) => {
+            let queryEmail = req.query.email;
+            let query = {email: queryEmail}
+            let reviews = await reviewCollection.find(query).toArray()
+            res.send({
+                status: "success",
+                data: reviews
             })
         })
     }
