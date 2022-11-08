@@ -61,6 +61,17 @@ async function run(){
                 data: reviews
             })
         })
+
+        // get reviews for a service
+        app.get('/service-reviews/', async (req, res) => {
+            let queryServiceId = req.query.id;
+            let query = {serviceId: queryServiceId}
+            let reviews = await reviewCollection.find(query).toArray()
+            res.send({
+                status: "success",
+                data: reviews
+            })
+        })
     }
     finally{}
 }
