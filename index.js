@@ -79,7 +79,7 @@ async function run(){
 
 
         // get reviews for a service
-        app.get('/my-reviews/',auth, async (req, res) => {
+        app.get('/my-reviews',auth, async (req, res) => {
             let queryEmail = req.query.email;
             let query = {email: queryEmail}
             let reviews = await reviewCollection.find(query).toArray()
@@ -90,10 +90,21 @@ async function run(){
         })
 
         // get reviews for a service
-        app.get('/service-reviews/', async (req, res) => {
+        app.get('/service-reviews', async (req, res) => {
             let queryServiceId = req.query.id;
-            let query = {serviceId: queryServiceId}
+            let query = {service_id: queryServiceId}
             let reviews = await reviewCollection.find(query).toArray()
+            res.send({
+                status: "success",
+                data: reviews
+            })
+        })
+
+        // post new review for a service
+        app.post('/service-reviews', async (req, res) => {
+            let newReview = req.body;
+            let result = await reviewCollection.insertOne(newReview)
+            let reviews = await reviewCollection.find({}).toArray()
             res.send({
                 status: "success",
                 data: reviews
