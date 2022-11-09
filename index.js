@@ -108,6 +108,24 @@ async function run(){
             })
         })
 
+        // update a review
+        app.put('/my-reviews',auth, async (req, res) => {
+            let id = req.query.id;
+            let text = req.body.text;
+            let query = {_id: ObjectId(id)}
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                  details: text
+                },
+              };
+            let result = await reviewCollection.updateOne(query, updateDoc, options)
+            res.send({
+                status: "success",
+                data: result
+            })
+        })
+
         // get reviews for a service
         app.get('/service-reviews', async (req, res) => {
             let queryServiceId = req.query.id;
