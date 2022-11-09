@@ -21,11 +21,16 @@ const auth = (req, res, next) => {
         return res.status(401).send({status: 401, message: "Unauthorised Access"});
     }
     else{
-        let queryEmail = req.query.email;
+        try{
+            let queryEmail = req.query.email;
         let data = jwt.verify(token, process.env.SECRET_TOKEN)
         if(queryEmail !== data.email)
-        return res.status(403).send({status: 403, message: "Forbidden Access"});
+            return res.status(403).send({status: 403, message: "Forbidden Access"});
         next();
+        }
+        catch{
+            return res.status(403).send({status: 403, message: "Forbidden Access"});
+        }
     }
 }
 
@@ -45,9 +50,11 @@ async function run(){
         app.get('/services' , async (req, res) => {
             let services;
             if(req.query.limit)
-                services = await serviceCollection.find({}).limit(3).toArray();
+            {
+                services = await serviceCollection.find({}).sort({_id : -1}).limit(3).toArray();
+            }
             else
-                services = await serviceCollection.find({}).toArray();
+                services = await serviceCollection.find({}).sort({_id : -1}).toArray();
             res.send({
                 status: "success",
                 data: services
@@ -78,15 +85,26 @@ async function run(){
         })
 
 
-        // get reviews for a service
+        // get my reviews for a service
         app.get('/my-reviews',auth, async (req, res) => {
             let queryEmail = req.query.email;
             let query = {email: queryEmail}
-            let reviews = await reviewCollection.find(query).toArray()
-            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
+            let reviews = await reviewCollection.find(query).sort({time : -1}).toArray()
+            
             res.send({
                 status: "success",
                 data: reviews
+            })
+        })
+
+        // delete a review
+        app.delete('/my-reviews',auth, async (req, res) => {
+            let id = req.query.id;
+            let query = {_id: ObjectId(id)}
+            let result = await reviewCollection.deleteOne(query)
+            res.send({
+                status: "success",
+                data: result
             })
         })
 
@@ -94,8 +112,7 @@ async function run(){
         app.get('/service-reviews', async (req, res) => {
             let queryServiceId = req.query.id;
             let query = {service_id: queryServiceId}
-            let reviews = await reviewCollection.find(query).toArray()
-            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
+            let reviews = await reviewCollection.find(query).sort({time: -1}).toArray()
             res.send({
                 status: "success",
                 data: reviews
@@ -106,8 +123,7 @@ async function run(){
         app.post('/service-reviews', async (req, res) => {
             let newReview = req.body;
             let result = await reviewCollection.insertOne(newReview)
-            let reviews = await reviewCollection.find({}).toArray()
-            reviews?.sort((a, b) => (a.time > b.time ? -1 : 1))
+            let reviews = await reviewCollection.find({}).sort({time:-1}).toArray()
             res.send({
                 status: "success",
                 data: reviews
